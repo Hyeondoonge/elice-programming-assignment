@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import CourseArea from './CourseArea';
-import FilterArea from './FilterArea';
-import SearchArea from './SearchArea';
+
+interface ContainerProps {
+  children?: React.ReactNode;
+}
 
 const StyledContainer = styled.div`
   background-color: #af97b4;
@@ -17,12 +18,6 @@ const StyledContainer = styled.div`
   justify-content: space-between;
 `;
 
-export default function Container() {
-  return (
-    <StyledContainer>
-      <SearchArea />
-      <FilterArea />
-      <CourseArea />
-    </StyledContainer>
-  );
+export default function Container({ children }: ContainerProps) {
+  return <StyledContainer>{children}</StyledContainer>;
 }
