@@ -17,7 +17,7 @@ const StyledCoursePage = styled.div`
 export default function CoursePage() {
   const [courses, totalCount, isLoading, updateCourses] = useGetPost();
   const debounce = useDebounce();
-  const [option, setOption] = useState({ offset: 0, count: 20 });
+  const [option, setOption] = useState({ title: '', offset: 0, count: 20 });
 
   const onChangeTitleHandler = (title: string) => {
     debounce(() => {
@@ -42,8 +42,15 @@ export default function CoursePage() {
       <Container>
         <SearchArea onChangeHandler={onChangeTitleHandler} />
         <FilterArea onClickHandler={onClickFilterHandler} />
-        <CourseArea courses={courses} />
-        <PageNumberArea totalPage={1 + Math.floor(totalCount / 20)} onClickHandler={onClickPageHandler} />
+        {option.title !== '' &&
+          (courses.length === 0 ? (
+            <div>검색된 결과가 없습니다.</div>
+          ) : (
+            <>
+              <CourseArea courses={courses} />
+              <PageNumberArea totalPage={1 + Math.floor(totalCount / 20)} onClickHandler={onClickPageHandler} />
+            </>
+          ))}
       </Container>
     </StyledCoursePage>
   );
