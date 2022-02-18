@@ -14,11 +14,16 @@ interface StyledChipProps {
 
 const StyledChip = styled.div<StyledChipProps>`
   cursor: pointer;
-  ${props => (props.selected ? `background-color: #af97b4; color: white;` : `background-color: grey; color: black;`)}
+  ${props => (props.selected ? `background-color: #af97b4; color: white;` : `background-color: #E8E8E8; color: black;`)}
   border-radius: 40px;
   padding: 5px;
+  transition: 0.3s;
 `;
 
-export default function Chip({ label, selected }: ChipProps) {
-  return <StyledChip selected={selected}>{label}</StyledChip>;
+export default function Chip({ label, selected, onClick }: ChipProps) {
+  return (
+    <StyledChip selected={selected} onClick={onClick}>
+      {label}
+    </StyledChip>
+  );
 }

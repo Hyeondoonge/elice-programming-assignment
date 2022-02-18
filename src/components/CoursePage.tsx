@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Container from './Container';
 import CourseArea from './CourseArea';
 import FilterArea from './FilterArea';
 import PageNumberArea from './PageNumberArea';
 import SearchArea from './SearchArea';
-
-type ButtonEvent = React.MouseEvent<HTMLButtonElement>;
+import useDebounce from '../hooks/useDebounce';
+import useGetPost from '../hooks/useGetCourse';
 
 const StyledCoursePage = styled.div`
   display: flex;
@@ -15,21 +15,35 @@ const StyledCoursePage = styled.div`
 `;
 
 export default function CoursePage() {
-  const [data, setData] = useState([]);
+  const [courses, isLoading, updateCourses] = useGetPost();
+  const debounce = useDebounce();
+  const [option, setOption] = useState({ offset: 1, count: 20 });
 
-  const onChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+  const onChangeTitleHandler = (title: string) => {
+    debounce(() => {
+      const newOption = { ...option, title };
+      updateCourses(newOption);
+      setOption(newOption);
+    }, 300);
   };
-  const onClickFilter = (e: React.MouseEvent<HTMLInputElement>) => {};
-  const onClickPage = (e: React.MouseEvent<HTMLInputElement>) => {};
+  const onClickFilter = (filters: Array<string>) => {
+    const newOption = { ...option, price: filters };
+    updateCourses(newOption);
+    setOption(newOption);
+  };
+  const onClickPageHandler = (page: number) => {
+    const newOption = { ...option, offset: page };
+    updateCourses(newOption);
+    setOption(newOption);
+  };
 
   return (
     <StyledCoursePage>
       <Container>
-        <SearchArea onChange={onChangeKeyword} />
-        <FilterArea onClick={onClickFilter} />
-        <CourseArea />
-        <PageNumberArea onClick={onClickPage} />
+        <SearchArea onChange={onChangeTitleHandler} />
+        <FilterArea onClickHandler={onClickFilter} />
+        <CourseArea courses={courses} />
+        <PageNumberArea onClick={onClickPageHandler} />
       </Container>
     </StyledCoursePage>
   );
