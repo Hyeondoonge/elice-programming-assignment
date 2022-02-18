@@ -1,22 +1,77 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import styled, { css } from 'styled-components';
 import List from '../common/List';
+import { RiArrowLeftSFill, RiArrowRightSFill } from 'react-icons/ri';
 
 interface PageNumberAreaProps {
-  onClick: (e: React.MouseEvent<HTMLInputElement>) => void;
+  totalPage: number;
+  onClickHandler: (page: number) => void;
 }
 
-const StyledBox = styled.div`
+interface PageNumberProps {
+  onClick: (page: number) => void;
+  selected: boolean;
+}
+
+const StyledBox = styled.div<PageNumberProps>`
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  ${({ selected }) =>
+    selected
+      ? css`
+          background-color: #524fa1;
+          color: white;
+        `
+      : `
+  color: #999;`};
+`;
+
+const StyledNav = styled.button`
+  background-color: transparent;
+  border: none;
   cursor: pointer;
 `;
 
-export default function PageNumberArea({ onClick }: PageNumberAreaProps) {
+export default function PageNumberArea({ totalPage, onClickHandler }: PageNumberAreaProps) {
+  const [page, setPage] = useState(1);
+
   return (
-    <div>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
       <List>
-        <StyledBox>1</StyledBox>
-        <StyledBox>2</StyledBox>
-        <StyledBox>3</StyledBox>
+        <StyledNav
+          disabled={page === 1}
+          onClick={() => {
+            onClickHandler(page - 1);
+            setPage(page - 1);
+          }}
+        >
+          <RiArrowLeftSFill />
+        </StyledNav>
+        {new Array(totalPage).fill('').map((_, index) => (
+          <StyledBox
+            selected={page === index + 1}
+            onClick={() => {
+              onClickHandler(index + 1);
+              setPage(index + 1);
+            }}
+          >
+            {index + 1}
+          </StyledBox>
+        ))}
+        <StyledNav
+          disabled={page === totalPage}
+          onClick={() => {
+            onClickHandler(page + 1);
+            setPage(page + 1);
+          }}
+        >
+          <RiArrowRightSFill />
+        </StyledNav>
       </List>
     </div>
   );

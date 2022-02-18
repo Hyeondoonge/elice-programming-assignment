@@ -15,9 +15,9 @@ const StyledCoursePage = styled.div`
 `;
 
 export default function CoursePage() {
-  const [courses, isLoading, updateCourses] = useGetPost();
+  const [courses, totalCount, isLoading, updateCourses] = useGetPost();
   const debounce = useDebounce();
-  const [option, setOption] = useState({ offset: 1, count: 20 });
+  const [option, setOption] = useState({ offset: 0, count: 20 });
 
   const onChangeTitleHandler = (title: string) => {
     debounce(() => {
@@ -26,13 +26,13 @@ export default function CoursePage() {
       setOption(newOption);
     }, 300);
   };
-  const onClickFilter = (filters: Array<string>) => {
+  const onClickFilterHandler = (filters: Array<string>) => {
     const newOption = { ...option, price: filters };
     updateCourses(newOption);
     setOption(newOption);
   };
   const onClickPageHandler = (page: number) => {
-    const newOption = { ...option, offset: page };
+    const newOption = { ...option, offset: (page - 1) * 20 };
     updateCourses(newOption);
     setOption(newOption);
   };
@@ -40,10 +40,10 @@ export default function CoursePage() {
   return (
     <StyledCoursePage>
       <Container>
-        <SearchArea onChange={onChangeTitleHandler} />
-        <FilterArea onClickHandler={onClickFilter} />
+        <SearchArea onChangeHandler={onChangeTitleHandler} />
+        <FilterArea onClickHandler={onClickFilterHandler} />
         <CourseArea courses={courses} />
-        <PageNumberArea onClick={onClickPageHandler} />
+        <PageNumberArea totalPage={1 + Math.floor(totalCount / 20)} onClickHandler={onClickPageHandler} />
       </Container>
     </StyledCoursePage>
   );
