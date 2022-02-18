@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { RiSearchLine } from 'react-icons/ri';
 
 interface SearchAreaProps {
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeHandler: (title: string) => void;
 }
 
 const StyledSearchArea = styled.div`
@@ -29,11 +29,17 @@ const StyledInput = styled.input`
   }
 `;
 
-export default function SearchArea({ onChange }: SearchAreaProps) {
+export default function SearchArea({ onChangeHandler }: SearchAreaProps) {
   return (
     <StyledSearchArea>
       <RiSearchLine style={{ margin: '0px 16px' }} />
-      <StyledInput type="text" placeholder="배우고 싶은 언어, 기술을 선택하세요" onChange={onChange} />
+      <StyledInput
+        type="text"
+        placeholder="배우고 싶은 언어, 기술을 선택하세요"
+        onChange={e => {
+          onChangeHandler(e.target.value);
+        }}
+      />
     </StyledSearchArea>
   );
 }
