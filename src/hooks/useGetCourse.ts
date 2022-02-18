@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { fetchCourse } from '../api/courseAPI';
 import { CourseProps, OptionProps } from '../components/type';
 
-type ReturnTypes = [CourseProps[], Boolean, Function];
+type ReturnTypes = [CourseProps[], number, Boolean, Function];
 
 export default function useGetCourse(): ReturnTypes {
   const [courses, setCourses] = useState<CourseProps[]>([]);
@@ -33,6 +33,7 @@ export default function useGetCourse(): ReturnTypes {
 
       setIsLoading(true);
       const res = await fetchCourse(param);
+      setTotalCount(res.course_count);
       setCourses(
         res.courses.map(({ id, title, short_description, logo_file_url, label, enroll_type, is_free }: CourseProps) => ({
           id,
@@ -48,5 +49,5 @@ export default function useGetCourse(): ReturnTypes {
     })();
   };
 
-  return [courses, isLoading, updateCourses];
+  return [courses, totalCount, isLoading, updateCourses];
 }
