@@ -25,7 +25,7 @@ export default function CoursePage() {
   const onChangeTitleHandler = (title: string) => {
     try {
       debounce(() => {
-        const newOption = { ...option, title };
+        const newOption = { ...option, offset: 0, title };
         setPage(1);
         updateCourses(newOption);
         setOption(newOption);
