@@ -6,7 +6,6 @@ interface ContainerProps {
 }
 
 const StyledContainer = styled.div`
-  background-color: #af97b4;
   @media screen and (min-width: 1280px) {
     width: 1280px;
   }
@@ -16,6 +15,7 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 10px;
 `;
 
 export default function Container({ children }: ContainerProps) {
