@@ -1,4 +1,4 @@
-# elice-programming-assignment
+# 엘리스 FE 과제
 
 ## 1. 코딩 컨벤션
 
@@ -18,6 +18,23 @@
 
 
 ## 3. 기능 구현
+
+### 🔎 키워드 검색
+debounce 사용자 훅을 정의 (./src/hooks/useDebounce.ts)하고,
+이벤트 핸들러가 내부 로직을 debounce 하도록 구현
+``` jsx
+const debounce = useDebounce();
+ 
+const onChangeTitleHandler = (title: string) => {
+    try {
+      debounce(() => {
+        ...
+      }, 300);
+    } catch (error) {
+      setError(error);
+    }
+  };
+```
 
 ### 🔎  키워드 검색, 필터링, 페이징 시 데이터 업데이트
 
