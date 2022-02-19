@@ -9,7 +9,7 @@ const fetchCourse: (params: any) => Promise<CourseListResponse> = async (params:
     if (res.status !== 200) throw new Error(`${res.status} ${res.statusText}`);
     return res.json();
   } catch (error) {
-    throw new Error('ERROR OCCUR');
+    throw new Error(error);
   }
 };
 
