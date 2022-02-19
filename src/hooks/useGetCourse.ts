@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchCourse } from '../api/courseAPI';
-import { CourseProps, OptionProps } from '../components/type';
+import { CourseProps, OptionProps } from '../type';
 
 type ReturnTypes = [CourseProps[], number, Function];
 

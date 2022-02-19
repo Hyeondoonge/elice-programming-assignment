@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Container from './Container';
-import CourseArea from './CourseArea';
-import FilterArea from './FilterArea';
-import PageNumberArea from './PageNumberArea';
-import SearchArea from './SearchArea';
-import useDebounce from '../hooks/useDebounce';
-import useGetCourse from '../hooks/useGetCourse';
+import Container from '../common/Container';
+import CourseArea from '../course/CourseArea';
+import FilterArea from '../course/FilterArea';
+import PageNumberArea from '../course/PageNumberArea';
+import SearchArea from '../course/SearchArea';
+import useDebounce from '../../hooks/useDebounce';
+import useGetCourse from '../../hooks/useGetCourse';
 import ErrorPage from './ErrorPage';
 
 const StyledCoursePage = styled.div`

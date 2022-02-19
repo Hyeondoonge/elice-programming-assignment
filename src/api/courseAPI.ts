@@ -1,4 +1,4 @@
-import { CourseListResponse } from '../components/type';
+import { CourseListResponse } from '../type';
 
 const fetchCourse: (params: any) => Promise<CourseListResponse> = async (params: any) => {
   const { filter_conditions, offset, count } = params;
