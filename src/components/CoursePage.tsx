@@ -19,12 +19,14 @@ export default function CoursePage() {
   const [courses, totalCount, updateCourses] = useGetCourse();
   const debounce = useDebounce();
   const [option, setOption] = useState({ title: '', offset: 0, count: 20 });
+  const [page, setPage] = useState(1);
   const [error, setError] = useState(null);
 
   const onChangeTitleHandler = (title: string) => {
     try {
       debounce(() => {
         const newOption = { ...option, title };
+        setPage(1);
         updateCourses(newOption);
         setOption(newOption);
       }, 300);
@@ -34,7 +36,8 @@ export default function CoursePage() {
   };
   const onClickFilterHandler = (filters: Array<string>) => {
     try {
-      const newOption = { ...option, price: filters };
+      const newOption = { ...option, offset: 0, price: filters };
+      setPage(1);
       updateCourses(newOption);
       setOption(newOption);
     } catch (error) {
@@ -63,7 +66,7 @@ export default function CoursePage() {
           ) : (
             <>
               <CourseArea courses={courses} />
-              <PageNumberArea totalPage={1 + Math.floor(totalCount / 20)} onClickHandler={onClickPageHandler} />
+              <PageNumberArea totalCount={totalCount} page={page} updatePage={setPage} onClickHandler={onClickPageHandler} />
             </>
           ))}
       </Container>

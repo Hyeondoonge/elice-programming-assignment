@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import List from '../common/List';
 import { RiArrowLeftSFill, RiArrowRightSFill } from 'react-icons/ri';
 
 interface PageNumberAreaProps {
-  totalPage: number;
+  totalCount: number;
+  page: number;
+  updatePage: (page: number) => void;
   onClickHandler: (page: number) => void;
 }
 
@@ -37,8 +39,8 @@ const StyledNav = styled.button`
   cursor: pointer;
 `;
 
-export default function PageNumberArea({ totalPage, onClickHandler }: PageNumberAreaProps) {
-  const [page, setPage] = useState(1);
+export default function PageNumberArea({ page, updatePage, totalCount, onClickHandler }: PageNumberAreaProps) {
+  const totalPage = 1 + Math.floor(totalCount / 20);
 
   const getStartPage = (page: number) => {
     if (page - 4 > 0) {
@@ -54,7 +56,6 @@ export default function PageNumberArea({ totalPage, onClickHandler }: PageNumber
 
   const startPage = getStartPage(page);
   const endPage = getEndPage(page);
-
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       <List>
@@ -62,7 +63,7 @@ export default function PageNumberArea({ totalPage, onClickHandler }: PageNumber
           disabled={page === 1}
           onClick={() => {
             onClickHandler(page - 1);
-            setPage(page - 1);
+            updatePage(page - 1);
           }}
         >
           <RiArrowLeftSFill />
@@ -71,10 +72,11 @@ export default function PageNumberArea({ totalPage, onClickHandler }: PageNumber
           const pageIndex = startPage + index;
           return (
             <StyledBox
+              key={index}
               selected={page === pageIndex}
               onClick={() => {
                 onClickHandler(pageIndex);
-                setPage(pageIndex);
+                updatePage(pageIndex);
               }}
             >
               {pageIndex}
@@ -85,10 +87,11 @@ export default function PageNumberArea({ totalPage, onClickHandler }: PageNumber
           const pageIndex = page + index + 1;
           return (
             <StyledBox
+              key={index}
               selected={page === pageIndex}
               onClick={() => {
                 onClickHandler(pageIndex);
-                setPage(pageIndex);
+                updatePage(pageIndex);
               }}
             >
               {pageIndex}
@@ -99,7 +102,7 @@ export default function PageNumberArea({ totalPage, onClickHandler }: PageNumber
           disabled={page === totalPage}
           onClick={() => {
             onClickHandler(page + 1);
-            setPage(page + 1);
+            updatePage(page + 1);
           }}
         >
           <RiArrowRightSFill />
