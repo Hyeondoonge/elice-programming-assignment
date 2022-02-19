@@ -6,7 +6,7 @@ import FilterArea from './FilterArea';
 import PageNumberArea from './PageNumberArea';
 import SearchArea from './SearchArea';
 import useDebounce from '../hooks/useDebounce';
-import useGetPost from '../hooks/useGetCourse';
+import useGetCourse from '../hooks/useGetCourse';
 
 const StyledCoursePage = styled.div`
   display: flex;
@@ -15,7 +15,7 @@ const StyledCoursePage = styled.div`
 `;
 
 export default function CoursePage() {
-  const [courses, totalCount, isLoading, updateCourses] = useGetPost();
+  const [courses, totalCount, updateCourses] = useGetCourse();
   const debounce = useDebounce();
   const [option, setOption] = useState({ title: '', offset: 0, count: 20 });
 

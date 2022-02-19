@@ -2,12 +2,11 @@ import { useState } from 'react';
 import { fetchCourse } from '../api/courseAPI';
 import { CourseProps, OptionProps } from '../components/type';
 
-type ReturnTypes = [CourseProps[], number, Boolean, Function];
+type ReturnTypes = [CourseProps[], number, Function];
 
 export default function useGetCourse(): ReturnTypes {
   const [courses, setCourses] = useState<CourseProps[]>([]);
   const [totalCount, setTotalCount] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
   const count = 20;
 
   const updateCourses = (options: OptionProps) => {
@@ -31,7 +30,6 @@ export default function useGetCourse(): ReturnTypes {
         count
       };
 
-      setIsLoading(true);
       const res = await fetchCourse(param);
       setTotalCount(res.course_count);
       setCourses(
@@ -45,9 +43,8 @@ export default function useGetCourse(): ReturnTypes {
           is_free
         }))
       );
-      setIsLoading(false);
     })();
   };
 
-  return [courses, totalCount, isLoading, updateCourses];
+  return [courses, totalCount, updateCourses];
 }
