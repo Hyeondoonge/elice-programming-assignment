@@ -72,6 +72,7 @@ const StyledCourseArea = styled.div`
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
+  min-height: 300px;
 `;
 
 export default function CourseArea({ courses }: CoursesProps) {

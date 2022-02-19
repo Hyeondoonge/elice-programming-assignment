@@ -17,12 +17,13 @@ const StyledRow = styled.div`
   display: flex;
   align-items: center;
   border: 1px solid #d8d8d8;
+  background-color: white;
 `;
 
 const StyledType = styled.div`
   background-color: #e8e8e8;
   border: 1px solid #d8d8d8;
-  padding: 10px;
+  padding: 11px;
   width: 10%;
 `;
 
