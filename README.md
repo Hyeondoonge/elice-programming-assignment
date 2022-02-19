@@ -2,8 +2,8 @@
 
 ## 1. 코딩 컨벤션
 
-- 커밋  [https://overcome-the-limits.tistory.com/entry/협업-협업을-위한-기본적인-git-커밋컨벤션-설정하기](https://overcome-the-limits.tistory.com/entry/%ED%98%91%EC%97%85-%ED%98%91%EC%97%85%EC%9D%84-%EC%9C%84%ED%95%9C-%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8-git-%EC%BB%A4%EB%B0%8B%EC%BB%A8%EB%B2%A4%EC%85%98-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0)
-- 코딩 스타일 prettier
+- 커밋 컨벤션은 참조 사이트를 따름 [https://overcome-the-limits.tistory.com/entry/협업-협업을-위한-기본적인-git-커밋컨벤션-설정하기](https://overcome-the-limits.tistory.com/entry/%ED%98%91%EC%97%85-%ED%98%91%EC%97%85%EC%9D%84-%EC%9C%84%ED%95%9C-%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8-git-%EC%BB%A4%EB%B0%8B%EC%BB%A8%EB%B2%A4%EC%85%98-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0)
+- prettier 설정파일을 이용해 코드 스타일 포맷팅
 
 ## 2. 프로젝트 구조
 - 컴포넌트의 대략적인 성격만 알면 쉽게 찾을 수 있는 구조를 목표로, 비슷한 성격을 가진 모듈들을 모아 프로젝트 구조 설계
