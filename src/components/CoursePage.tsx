@@ -7,6 +7,7 @@ import PageNumberArea from './PageNumberArea';
 import SearchArea from './SearchArea';
 import useDebounce from '../hooks/useDebounce';
 import useGetCourse from '../hooks/useGetCourse';
+import ErrorPage from './ErrorPage';
 
 const StyledCoursePage = styled.div`
   display: flex;
@@ -18,24 +19,38 @@ export default function CoursePage() {
   const [courses, totalCount, updateCourses] = useGetCourse();
   const debounce = useDebounce();
   const [option, setOption] = useState({ title: '', offset: 0, count: 20 });
+  const [error, setError] = useState(null);
 
   const onChangeTitleHandler = (title: string) => {
-    debounce(() => {
-      const newOption = { ...option, title };
-      updateCourses(newOption);
-      setOption(newOption);
-    }, 300);
+    try {
+      debounce(() => {
+        const newOption = { ...option, title };
+        updateCourses(newOption);
+        setOption(newOption);
+      }, 300);
+    } catch (error) {
+      setError(error);
+    }
   };
   const onClickFilterHandler = (filters: Array<string>) => {
-    const newOption = { ...option, price: filters };
-    updateCourses(newOption);
-    setOption(newOption);
+    try {
+      const newOption = { ...option, price: filters };
+      updateCourses(newOption);
+      setOption(newOption);
+    } catch (error) {
+      setError(error);
+    }
   };
   const onClickPageHandler = (page: number) => {
-    const newOption = { ...option, offset: (page - 1) * 20 };
-    updateCourses(newOption);
-    setOption(newOption);
+    try {
+      const newOption = { ...option, offset: (page - 1) * 20 };
+      updateCourses(newOption);
+      setOption(newOption);
+    } catch (error) {
+      setError(error);
+    }
   };
+  if (error) return <ErrorPage error={error} />;
 
   return (
     <StyledCoursePage>
