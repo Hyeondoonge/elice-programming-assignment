@@ -14,7 +14,8 @@ interface StyledChipProps {
 
 const StyledChip = styled.div<StyledChipProps>`
   cursor: pointer;
-  ${props => (props.selected ? `background-color: #af97b4; color: white;` : `background-color: #E8E8E8; color: black;`)}
+  background-color: ${props => (props.selected ? '#af97b4' : '#E8E8E8')};
+  color: ${props => (props.selected ? 'white' : 'black')};
   border-radius: 40px;
   padding: 5px;
   transition: 0.3s;
