@@ -20,7 +20,7 @@ export interface CoursesProps {
 }
 
 export interface CourseListResponse {
-  courses: object[];
+  courses: CourseProps[];
   course_count: number;
   _result: string;
 }
