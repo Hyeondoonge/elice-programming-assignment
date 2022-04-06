@@ -1,15 +1,7 @@
 import { useEffect, useState } from 'react';
 import { fetchCourse } from '../api/courseAPI';
 import { CourseProps, OptionProps } from '../type';
-
-interface DataProps {
-  courses: CourseProps[];
-  totalCount: number;
-}
-
-interface hookProps {
-  (): [OptionProps, (options: OptionProps) => void, DataProps, boolean];
-}
+import { DataProps, hookProps } from '../type/data';
 
 export const useGetCourse: hookProps = function (): [
   OptionProps,

@@ -1,12 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { fetchCourse } from '../../api/courseAPI';
 import { CourseProps, OptionProps } from '../../type';
+import { DataProps } from '../../type/data';
 import ErrorContext from './ErrorContext';
-
-interface DataProps {
-  courses: CourseProps[];
-  totalCount: number;
-}
 
 const CourseContext = createContext<
   [OptionProps, (option: OptionProps) => void, DataProps, boolean] | []

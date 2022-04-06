@@ -24,3 +24,12 @@ export interface CourseListResponse {
   course_count: number;
   _result: string;
 }
+
+export interface DataProps {
+  courses: CourseProps[];
+  totalCount: number;
+}
+
+export interface hookProps {
+  (): [OptionProps, (options: OptionProps) => void, DataProps, boolean];
+}

@@ -1,16 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
-interface ChipProps {
-  label: string;
-  selected: boolean;
-  onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
-}
-
-interface StyledChipProps {
-  selected: boolean;
-  onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
-}
+import { StyledChipProps, ChipProps } from '../../type/component';
 
 const StyledChip = styled.div<StyledChipProps>`
   cursor: pointer;

@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { RiBarChartLine, RiDashboardFill, RiFeedbackFill } from 'react-icons/ri';
-import { CourseProps, CoursesProps } from '../../type';
-import { CoursePageContext } from '../page/CoursePage';
+import { CourseProps } from '../../type/data';
 import CourseContext from '../context/CourseContext';
+import { IconTextProps } from '../../type/component';
 
 const EllipsisWrapper = styled.div`
   overflow: hidden;
@@ -13,10 +13,6 @@ const EllipsisWrapper = styled.div`
   -webkit-line-clamp: 2;
   line-height: 1.6;
 `;
-interface IconTextProps {
-  Icon: any; // IconType
-  text: string;
-}
 
 const IconText = ({ Icon, text }: IconTextProps) => (
   <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>

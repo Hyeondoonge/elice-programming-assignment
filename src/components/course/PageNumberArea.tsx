@@ -4,17 +4,7 @@ import List from '../common/List';
 import { RiArrowLeftSFill, RiArrowRightSFill } from 'react-icons/ri';
 import { CoursePageContext } from '../page/CoursePage';
 import CourseContext from '../context/CourseContext';
-
-interface PageNumberAreaProps {
-  totalCount: number;
-  offset: number;
-  onClickHandler: (page: number) => void;
-}
-
-interface PageNumberProps {
-  onClick: (page: number) => void;
-  selected: boolean;
-}
+import { PageNumberProps } from '../../type/component';
 
 const StyledBox = styled.div<PageNumberProps>`
   cursor: pointer;

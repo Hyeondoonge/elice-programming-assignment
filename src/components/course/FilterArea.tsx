@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
+import { FilterProps } from '../../type/component';
 import Chip from '../common/Chip';
 import List from '../common/List';
 import CourseContext from '../context/CourseContext';
-import { CoursePageContext } from '../page/CoursePage';
 
 const StyledFilterArea = styled.div`
   width: 100%;
@@ -24,11 +24,6 @@ const StyledType = styled.div`
   padding: 11px;
   width: 10%;
 `;
-
-interface FilterProps {
-  name: string;
-  selected: boolean;
-}
 
 type Filter = '가격';
 
