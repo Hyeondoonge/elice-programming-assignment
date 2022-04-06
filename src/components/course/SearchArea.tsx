@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { RiSearchLine } from 'react-icons/ri';
-
-interface SearchAreaProps {
-  onChangeHandler: (title: string) => void;
-}
+import { CoursePageContext } from '../page/CoursePage';
+import useDebounce from '../../hooks/useDebounce';
+import CourseContext from '../context/CourseContext';
 
 const StyledSearchArea = styled.div`
   width: 100%;
@@ -29,7 +28,10 @@ const StyledInput = styled.input`
   }
 `;
 
-export default function SearchArea({ onChangeHandler }: SearchAreaProps) {
+export default function SearchArea() {
+  const [option, setOption] = useContext(CourseContext);
+  const debounce = useDebounce();
+
   return (
     <StyledSearchArea>
       <RiSearchLine style={{ margin: '0px 16px' }} />
@@ -37,7 +39,9 @@ export default function SearchArea({ onChangeHandler }: SearchAreaProps) {
         type="text"
         placeholder="배우고 싶은 언어, 기술을 선택하세요"
         onChange={e => {
-          onChangeHandler(e.target.value);
+          debounce(() => {
+            setOption({ ...option, title: e.target.value, offset: 0 });
+          }, 300);
         }}
       />
     </StyledSearchArea>

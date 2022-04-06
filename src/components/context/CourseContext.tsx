@@ -1,22 +1,19 @@
-import { useEffect, useState } from 'react';
-import { fetchCourse } from '../api/courseAPI';
-import { CourseProps, OptionProps } from '../type';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { fetchCourse } from '../../api/courseAPI';
+import { CourseProps, OptionProps } from '../../type';
+import ErrorContext from './ErrorContext';
 
 interface DataProps {
   courses: CourseProps[];
   totalCount: number;
 }
 
-interface hookProps {
-  (): [OptionProps, (options: OptionProps) => void, DataProps, boolean];
-}
+const CourseContext = createContext<
+  [OptionProps, (option: OptionProps) => void, DataProps, boolean] | []
+>([]);
 
-export const useGetCourse: hookProps = function (): [
-  OptionProps,
-  (options: OptionProps) => void,
-  DataProps,
-  boolean
-] {
+export function CourseContextProvider({ children }: { children: React.ReactNode }) {
+  const [setError] = useContext(ErrorContext);
   const [option, setOption] = useState<OptionProps>({ title: '', offset: 0, count: 20, price: [] });
   const [data, setData] = useState<DataProps>({ totalCount: 0, courses: [] });
   const [loading, setLoading] = useState(false);
@@ -51,7 +48,7 @@ export const useGetCourse: hookProps = function (): [
       });
       setLoading(false);
     } catch (error) {
-      throw new Error(error);
+      setError('course 데이터 업데이트 중 문제가 발생했습니다... ' + error);
     }
   };
 
@@ -59,5 +56,11 @@ export const useGetCourse: hookProps = function (): [
     updateCourses(option);
   }, [option]);
 
-  return [option, setOption, data, loading];
-};
+  return (
+    <CourseContext.Provider value={[option, setOption, data, loading]}>
+      {children}
+    </CourseContext.Provider>
+  );
+}
+
+export default CourseContext;

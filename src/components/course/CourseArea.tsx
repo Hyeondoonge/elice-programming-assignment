@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { RiBarChartLine, RiDashboardFill, RiFeedbackFill } from 'react-icons/ri';
 import { CourseProps, CoursesProps } from '../../type';
+import { CoursePageContext } from '../page/CoursePage';
+import CourseContext from '../context/CourseContext';
 
 const EllipsisWrapper = styled.div`
   overflow: hidden;
@@ -77,10 +79,12 @@ const StyledCourseArea = styled.div`
   min-height: 300px;
 `;
 
-export default function CourseArea({ courses }: CoursesProps) {
+export default function CourseArea() {
+  const [option, setOption, data] = useContext(CourseContext);
+
   return (
     <StyledCourseArea>
-      {courses.map((course: CourseProps) => (
+      {data.courses.map((course: CourseProps) => (
         <Card key={course.id} {...course} />
       ))}
     </StyledCourseArea>

@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext, createContext } from 'react';
 import styled from 'styled-components';
 import Container from '../common/Container';
 import CourseArea from '../course/CourseArea';
 import FilterArea from '../course/FilterArea';
 import PageNumberArea from '../course/PageNumberArea';
 import SearchArea from '../course/SearchArea';
-import useDebounce from '../../hooks/useDebounce';
-import useGetCourse from '../../hooks/useGetCourse';
-import ErrorPage from './ErrorPage';
+import { TailSpin } from 'react-loader-spinner';
+import CourseContext from '../context/CourseContext';
 
 const StyledCoursePage = styled.div`
   display: flex;
@@ -15,60 +14,26 @@ const StyledCoursePage = styled.div`
   height: 100%;
 `;
 
-export default function CoursePage() {
-  const [courses, totalCount, updateCourses] = useGetCourse();
-  const debounce = useDebounce();
-  const [option, setOption] = useState({ title: '', offset: 0, count: 20 });
-  const [page, setPage] = useState(1);
-  const [error, setError] = useState(null);
+export const CoursePageContext = createContext([]);
 
-  const onChangeTitleHandler = (title: string) => {
-    try {
-      debounce(() => {
-        const newOption = { ...option, offset: 0, title };
-        setPage(1);
-        updateCourses(newOption);
-        setOption(newOption);
-      }, 300);
-    } catch (error) {
-      setError(error);
-    }
-  };
-  const onClickFilterHandler = (filters: Array<string>) => {
-    try {
-      const newOption = { ...option, offset: 0, price: filters };
-      setPage(1);
-      updateCourses(newOption);
-      setOption(newOption);
-    } catch (error) {
-      setError(error);
-    }
-  };
-  const onClickPageHandler = (page: number) => {
-    try {
-      const newOption = { ...option, offset: (page - 1) * 20 };
-      updateCourses(newOption);
-      setOption(newOption);
-    } catch (error) {
-      setError(error);
-    }
-  };
-  if (error) return <ErrorPage error={error} />;
+export default function CoursePage() {
+  const [option, setOption, data, loading] = useContext(CourseContext);
 
   return (
     <StyledCoursePage>
       <Container>
-        <SearchArea onChangeHandler={onChangeTitleHandler} />
-        <FilterArea onClickHandler={onClickFilterHandler} />
-        {option.title !== '' &&
-          (courses.length === 0 ? (
-            <div>검색된 결과가 없습니다.</div>
-          ) : (
-            <>
-              <CourseArea courses={courses} />
-              <PageNumberArea totalCount={totalCount} page={page} updatePage={setPage} onClickHandler={onClickPageHandler} />
-            </>
-          ))}
+        <SearchArea />
+        <FilterArea />
+        {loading ? (
+          <TailSpin color="#af97b4" width={80} height={80} />
+        ) : data.totalCount === 0 ? (
+          <div>검색된 결과가 없습니다.</div>
+        ) : (
+          <>
+            <CourseArea />
+            <PageNumberArea />
+          </>
+        )}
       </Container>
     </StyledCoursePage>
   );

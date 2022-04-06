@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import Chip from '../common/Chip';
 import List from '../common/List';
-
-interface FilterAreaProps {
-  onClickHandler: (filters: Array<string>) => void;
-}
+import CourseContext from '../context/CourseContext';
+import { CoursePageContext } from '../page/CoursePage';
 
 const StyledFilterArea = styled.div`
   width: 100%;
@@ -34,7 +32,8 @@ interface FilterProps {
 
 type Filter = '가격';
 
-export default function FilterArea({ onClickHandler }: FilterAreaProps) {
+export default function FilterArea() {
+  const [option, setOption, data] = useContext(CourseContext);
   const [filterList, setFilterList] = useState({
     가격: [
       { name: '무료', selected: false },
@@ -64,7 +63,13 @@ export default function FilterArea({ onClickHandler }: FilterAreaProps) {
                       // update 아이템 클릭 상태
                       // i, j를 전달해서 상태값 업데이트 진행 및 fetch 수행
                       setFilterList(newFilterList);
-                      onClickHandler(newFilterList[type].filter(({ selected }) => selected).map(({ name }) => name));
+                      setOption({
+                        ...option,
+                        offset: 0,
+                        price: newFilterList[type]
+                          .filter(({ selected }) => selected)
+                          .map(({ name }) => name)
+                      });
                     }}
                   />
                 </div>
