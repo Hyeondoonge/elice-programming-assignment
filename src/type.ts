@@ -1,7 +1,8 @@
 export interface OptionProps {
   title: string;
-  price: Array<string>;
   offset: number;
+  count: number;
+  price: Array<string>;
 }
 
 export interface CourseProps {
