@@ -1,4 +1,4 @@
-import { CourseListResponse } from '../type';
+import { CourseListResponse } from 'Types/data';
 
 // filter_conditions, offset, count 타입 정의
 

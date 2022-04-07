@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import { FilterProps } from '../../type/component';
+import { FilterProps } from 'Types/component';
 import Chip from '../common/Chip';
 import List from '../common/List';
 import CourseContext from '../context/CourseContext';

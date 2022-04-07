@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { RiBarChartLine, RiDashboardFill, RiFeedbackFill } from 'react-icons/ri';
-import { CourseProps } from '../../type/data';
+import { CourseProps } from 'Types/data';
 import CourseContext from '../context/CourseContext';
-import { IconTextProps } from '../../type/component';
+import { IconTextProps } from 'Types/component';
 
 const EllipsisWrapper = styled.div`
   overflow: hidden;

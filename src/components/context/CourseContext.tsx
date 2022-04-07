@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { fetchCourse } from '../../api/courseAPI';
-import { CourseProps, OptionProps } from '../../type';
-import { DataProps } from '../../type/data';
+import { CourseProps, OptionProps } from 'Types/data';
+import { DataProps } from 'Types/data';
 import ErrorContext from './ErrorContext';
 
 const CourseContext = createContext<
