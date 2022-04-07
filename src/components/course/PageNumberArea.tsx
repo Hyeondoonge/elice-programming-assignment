@@ -2,26 +2,17 @@ import React, { useContext } from 'react';
 import styled, { css } from 'styled-components';
 import List from '../common/List';
 import { RiArrowLeftSFill, RiArrowRightSFill } from 'react-icons/ri';
-import { CoursePageContext } from '../page/CoursePage';
 import CourseContext from '../context/CourseContext';
-import { PageNumberProps } from '../../type/component';
 
-const StyledBox = styled.div<PageNumberProps>`
+const StyledPageNumber = styled.div<{ selected: boolean }>`
   cursor: pointer;
   width: 24px;
   height: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  ${({ selected }) =>
-    selected
-      ? css`
-          background-color: #524fa1;
-          color: white;
-        `
-      : `
-  color: #999;`};
+  background-color: ${({ selected }) => (selected ? '#524fa1' : 'transparent')};
+  color: ${({ selected }) => (selected ? 'white' : '#999')};
 `;
 
 const StyledNav = styled.button`
@@ -66,7 +57,7 @@ export default function PageNumberArea() {
         {new Array(endPage - startPage + 1).fill('').map((_, index) => {
           const pageIndex = startPage + index;
           return (
-            <StyledBox
+            <StyledPageNumber
               key={index}
               selected={page === pageIndex}
               onClick={() => {
@@ -74,7 +65,7 @@ export default function PageNumberArea() {
               }}
             >
               {pageIndex}
-            </StyledBox>
+            </StyledPageNumber>
           );
         })}
         <StyledNav
