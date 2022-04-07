@@ -1,12 +1,17 @@
 {
+  // 컴파일 시 적용되는 옵션들.
   "compilerOptions": {
     "outDir": "./build/",
     "noImplicitAny": true,
+    "noImplicitReturns": true,
     "module": "es6",
-    "target": "es5",
     "jsx": "react",
     "allowJs": true,
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "paths": {
+      "Types/*": ["src/type/*"]
+    }
   }
 }
