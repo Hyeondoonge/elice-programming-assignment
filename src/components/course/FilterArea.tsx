@@ -1,76 +1,94 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FilterProps } from 'Types/component';
 import Chip from '../common/Chip';
 import List from '../common/List';
 import CourseContext from '../context/CourseContext';
+import { Filter, FilterOptionProps } from 'Types/data';
 
 const StyledFilterArea = styled.div`
+  border: 1px solid #d8d8d8;
   width: 100%;
-`;
 
-const typeList = ['가격'];
+  & > :not(:last-child) {
+    border-bottom: 1px solid #d8d8d8;
+  }
+`;
 
 const StyledRow = styled.div`
   display: flex;
   align-items: center;
-  border: 1px solid #d8d8d8;
   background-color: white;
+  gap: 1rem;
 `;
 
 const StyledType = styled.div`
-  background-color: #e8e8e8;
-  border: 1px solid #d8d8d8;
-  padding: 11px;
-  width: 10%;
+  background-color: #f4f4f4;
+  padding: 1rem;
+  width: 7%;
 `;
 
-type Filter = '가격';
+const mock_type: string[] = ['유형', '가격', '난이도'];
+const mock_filter: string[][] = [
+  ['과목', '챌린지', '테스트'],
+  ['무료', '유료', '구독'],
+  ['입문', '초급', '중급', '고급']
+];
 
 export default function FilterArea() {
   const [option, setOption, data] = useContext(CourseContext);
-  const [filterList, setFilterList] = useState({
-    가격: [
-      { name: '무료', selected: false },
-      { name: '유료', selected: false }
-    ]
-  });
+  const [filter, setFilter] = useState<FilterOptionProps[][]>(
+    mock_filter.map(e => e.map(e => ({ name: e, selected: false })))
+  );
+
+  const onClickChip = (type_index: number, filter_index: number) => {
+    const newFilter = filter.map(r => r.map(f => f));
+    newFilter[type_index][filter_index].selected = !newFilter[type_index][filter_index].selected;
+    setFilter(newFilter);
+
+    // 확장성있게 option 업데이트 할 수 있도록.
+    switch (type_index) {
+      case Filter.유형:
+        setOption({
+          ...option,
+          offset: 0,
+          type: newFilter[type_index].filter(({ selected }) => selected).map(({ name }) => name)
+        });
+        break;
+      case Filter.가격:
+        setOption({
+          ...option,
+          offset: 0,
+          price: newFilter[type_index].filter(({ selected }) => selected).map(({ name }) => name)
+        });
+        break;
+      case Filter.난이도:
+        setOption({
+          ...option,
+          offset: 0,
+          grade: newFilter[type_index].filter(({ selected }) => selected).map(({ name }) => name)
+        });
+        break;
+    }
+  };
 
   return (
     <StyledFilterArea>
-      {typeList.map((type: Filter, index) => (
-        <StyledRow key={index}>
+      {mock_type.map((type, type_index) => (
+        <StyledRow key={type_index}>
           <StyledType>{type}</StyledType>
-          <div
-            style={{
-              width: '100%'
-            }}
-          >
-            <List>
-              {filterList[type].map(({ name, selected }: FilterProps, index: number) => (
-                <div key={index} style={{ margin: '5px' }}>
-                  <Chip
-                    label={name}
-                    selected={selected}
-                    onClick={() => {
-                      const newFilterList = { ...filterList };
-                      newFilterList[type][index].selected = !newFilterList[type][index].selected;
-                      // update 아이템 클릭 상태
-                      // i, j를 전달해서 상태값 업데이트 진행 및 fetch 수행
-                      setFilterList(newFilterList);
-                      setOption({
-                        ...option,
-                        offset: 0,
-                        price: newFilterList[type]
-                          .filter(({ selected }) => selected)
-                          .map(({ name }) => name)
-                      });
-                    }}
-                  />
-                </div>
-              ))}
-            </List>
-          </div>
+          <List>
+            {filter[type_index].map(({ name, selected }, filter_index) => (
+              <Chip
+                key={filter_index}
+                label={name}
+                selected={selected}
+                onClick={() => {
+                  onClickChip(type_index, filter_index);
+                }}
+              />
+            ))}
+          </List>
         </StyledRow>
       ))}
     </StyledFilterArea>
