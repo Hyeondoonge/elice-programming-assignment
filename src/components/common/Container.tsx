@@ -1,9 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
-interface ContainerProps {
-  children?: React.ReactNode;
-}
+import { ComponentProps } from 'Types/component';
 
 const StyledContainer = styled.div`
   @media screen and (min-width: 1280px) {
@@ -18,6 +15,6 @@ const StyledContainer = styled.div`
   gap: 10px;
 `;
 
-export default function Container({ children }: ContainerProps) {
+export default function Container({ children }: ComponentProps) {
   return <StyledContainer>{children}</StyledContainer>;
 }
