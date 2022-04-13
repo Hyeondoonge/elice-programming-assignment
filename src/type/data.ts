@@ -1,4 +1,5 @@
 export interface OptionProps {
+  [index: string]: string | number | Array<string>;
   title: string;
   offset: number;
   count: number;
@@ -34,12 +35,6 @@ export interface DataProps {
 
 export interface hookProps {
   (): [OptionProps, (options: OptionProps) => void, DataProps, boolean];
-}
-
-export enum Filter {
-  '유형',
-  '가격',
-  '난이도'
 }
 
 export interface FilterOptionProps {
