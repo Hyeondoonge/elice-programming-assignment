@@ -4,7 +4,7 @@ import { FilterProps } from 'Types/component';
 import Chip from '../common/Chip';
 import List from '../common/List';
 import CourseContext from '../context/CourseContext';
-import { Filter, FilterOptionProps } from 'Types/data';
+import { FilterOptionProps, OptionProps } from 'Types/data';
 
 const StyledFilterArea = styled.div`
   border: 1px solid #d8d8d8;
@@ -29,6 +29,7 @@ const StyledType = styled.div`
 `;
 
 const mock_type: string[] = ['유형', '가격', '난이도'];
+const mock_type_attribute: string[] = ['type', 'price', 'grade'];
 const mock_filter: string[][] = [
   ['과목', '챌린지', '테스트'],
   ['무료', '유료', '구독'],
@@ -46,30 +47,12 @@ export default function FilterArea() {
     newFilter[type_index][filter_index].selected = !newFilter[type_index][filter_index].selected;
     setFilter(newFilter);
 
-    // 확장성있게 option 업데이트 할 수 있도록.
-    switch (type_index) {
-      case Filter.유형:
-        setOption({
-          ...option,
-          offset: 0,
-          type: newFilter[type_index].filter(({ selected }) => selected).map(({ name }) => name)
-        });
-        break;
-      case Filter.가격:
-        setOption({
-          ...option,
-          offset: 0,
-          price: newFilter[type_index].filter(({ selected }) => selected).map(({ name }) => name)
-        });
-        break;
-      case Filter.난이도:
-        setOption({
-          ...option,
-          offset: 0,
-          grade: newFilter[type_index].filter(({ selected }) => selected).map(({ name }) => name)
-        });
-        break;
-    }
+    const newOption: OptionProps = { ...option, offset: 0 };
+    const typeAttr = mock_type_attribute[type_index];
+    newOption[typeAttr] = newFilter[type_index]
+      .filter(({ selected }) => selected)
+      .map(({ name }) => name);
+    setOption(newOption);
   };
 
   return (
