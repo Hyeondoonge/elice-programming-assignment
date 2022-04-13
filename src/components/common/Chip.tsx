@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { ComponentProps, createContext } from 'react';
 import styled from 'styled-components';
 import { ChipProps } from 'Types/component';
+import { theme } from 'Types/theme';
 
 // { selected: boolean } => chipprops 속성 타입 변경 시 함께 변경되어야함.
 // Pick<ChipProps, 'selected'>> => 조금 길긴 하지만, 타입을 한개만 사용할 수 있고, 사용할 속성을 명시적으로 지정해야된다는 점은 위의 방법과 동일, 타입을 ChipProps의 속성이랑 공유할 수 있다는 점
@@ -8,10 +9,10 @@ import { ChipProps } from 'Types/component';
 
 const StyledChip = styled.div<Pick<ChipProps, 'selected'>>`
   cursor: pointer;
-  background-color: ${props => (props.selected ? '#af97b4' : '#E8E8E8')};
-  color: ${props => (props.selected ? 'white' : 'black')};
+  background-color: ${({ selected }) => (selected ? theme.bg.secondary : '#E9E9E9')};
+  color: ${({ selected }) => (selected ? 'black' : '#686868')};
   border-radius: 40px;
-  padding: 5px;
+  padding: 7px 12px;
   transition: 0.3s;
 `;
 

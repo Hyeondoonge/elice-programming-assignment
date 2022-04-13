@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import List from '../common/List';
 import { RiArrowLeftSFill, RiArrowRightSFill } from 'react-icons/ri';
 import CourseContext from '../context/CourseContext';
@@ -11,7 +11,7 @@ const StyledPageNumber = styled.div<{ selected: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ selected }) => (selected ? '#524fa1' : 'transparent')};
+  background-color: ${({ selected, theme }) => (selected ? theme.bg.main : 'transparent')};
   color: ${({ selected }) => (selected ? 'white' : '#999')};
 `;
 

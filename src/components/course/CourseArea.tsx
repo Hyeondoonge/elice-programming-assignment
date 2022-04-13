@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeContext, ThemeProvider } from 'styled-components';
 import { RiBarChartLine, RiDashboardFill, RiFeedbackFill } from 'react-icons/ri';
 import { CourseProps } from 'Types/data';
 import CourseContext from '../context/CourseContext';
@@ -14,19 +14,22 @@ const EllipsisWrapper = styled.div`
   line-height: 1.6;
 `;
 
-const IconText = ({ Icon, text }: IconTextProps) => (
-  <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-    <Icon />
-    <span style={{ fontSize: 12, color: '#7d7e80' }}>{text}</span>
-  </div>
-);
+const IconText = ({ Icon, text }: IconTextProps) => {
+  const theme = useContext(ThemeContext);
+  return (
+    <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+      <Icon color={theme.icon.secondary} />
+      <span style={{ fontSize: 12, color: theme.text.secondary }}>{text}</span>
+    </div>
+  );
+};
 
 const StyledCard = styled.div`
   width: 260px;
   height: 300px;
   border-radius: 8px;
   padding: 28px 24px;
-  background-color: white;
+  background-color: ${({ theme }) => theme.bg.card};
   position: relative;
   display: grid;
   grid-template-rows: 5% 15% 15%;
@@ -34,6 +37,7 @@ const StyledCard = styled.div`
 `;
 
 const Card = (course: CourseProps) => {
+  const theme = useContext(ThemeContext);
   const { title, short_description, logo_file_url, enroll_type, is_free } = course;
 
   const getLabel: any = (enroll_type: number, is_free: Boolean) => {
@@ -43,15 +47,14 @@ const Card = (course: CourseProps) => {
   };
 
   const label = getLabel(enroll_type, is_free);
-
   return (
     <StyledCard>
       <div style={{ display: 'flex', alignItems: 'center' }}>{label}</div>
       <EllipsisWrapper>
-        <span style={{ fontWeight: 600, color: '#222', fontSize: '16px' }}>{title}</span>
+        <span style={{ fontWeight: 600, color: theme.text.main, fontSize: '16px' }}>{title}</span>
       </EllipsisWrapper>
       <EllipsisWrapper>
-        <span style={{ color: '#5e5f61', fontSize: '14px' }}>{short_description}</span>
+        <span style={{ color: theme.text.secondary, fontSize: '14px' }}>{short_description}</span>
       </EllipsisWrapper>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
