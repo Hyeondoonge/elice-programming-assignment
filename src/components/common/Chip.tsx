@@ -13,7 +13,12 @@ const StyledChip = styled.div<Pick<ChipProps, 'selected'>>`
   color: ${({ selected }) => (selected ? 'black' : '#686868')};
   border-radius: 40px;
   padding: 7px 12px;
-  transition: 0.3s;
+
+  &:hover {
+    color: black;
+    background-color: #949494;
+    transition: 0.5s;
+  }
 `;
 
 export default function Chip({ label, selected, onClick }: ChipProps) {
