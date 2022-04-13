@@ -8,6 +8,7 @@ const StyledList = styled.div`
   flex-wrap: wrap;
   display: flex;
   position: relative;
+  gap: 1rem;
 `;
 
 export default function List({ children }: ListProps) {

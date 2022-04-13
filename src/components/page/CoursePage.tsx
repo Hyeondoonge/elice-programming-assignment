@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useContext, createContext } from 'react';
-import styled from 'styled-components';
+import React, { useContext, createContext } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 import Container from '../common/Container';
 import CourseArea from '../course/CourseArea';
 import FilterArea from '../course/FilterArea';
 import PageNumberArea from '../course/PageNumberArea';
 import SearchArea from '../course/SearchArea';
-import { TailSpin } from 'react-loader-spinner';
 import CourseContext from '../context/CourseContext';
+import Loader from '../common/Loader';
 
 const StyledCoursePage = styled.div`
   display: flex;
@@ -25,7 +25,7 @@ export default function CoursePage() {
         <SearchArea />
         <FilterArea />
         {loading ? (
-          <TailSpin color="#af97b4" width={80} height={80} />
+          <Loader />
         ) : data.totalCount === 0 ? (
           <div>검색된 결과가 없습니다.</div>
         ) : (
