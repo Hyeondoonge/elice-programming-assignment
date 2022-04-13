@@ -3,6 +3,8 @@ export interface OptionProps {
   offset: number;
   count: number;
   price: Array<string>;
+  type: Array<string>;
+  grade: Array<string>;
 }
 
 export interface CourseProps {
@@ -32,4 +34,15 @@ export interface DataProps {
 
 export interface hookProps {
   (): [OptionProps, (options: OptionProps) => void, DataProps, boolean];
+}
+
+export enum Filter {
+  '유형',
+  '가격',
+  '난이도'
+}
+
+export interface FilterOptionProps {
+  name: string;
+  selected: boolean;
 }

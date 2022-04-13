@@ -10,7 +10,14 @@ const CourseContext = createContext<
 
 export function CourseContextProvider({ children }: { children: React.ReactNode }) {
   const [setError] = useContext(ErrorContext);
-  const [option, setOption] = useState<OptionProps>({ title: '', offset: 0, count: 20, price: [] });
+  const [option, setOption] = useState<OptionProps>({
+    title: '',
+    offset: 0,
+    count: 20,
+    price: [],
+    grade: [],
+    type: []
+  });
   const [data, setData] = useState<DataProps>({ totalCount: 0, courses: [] });
   const [loading, setLoading] = useState(false);
   const count = 20;
