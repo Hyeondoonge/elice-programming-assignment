@@ -5,9 +5,9 @@ export interface ComponentProps {
 }
 
 export interface ChipProps {
-  label?: string;
+  label: string;
   selected: boolean;
-  onClick: (e: React.MouseEvent<HTMLInputElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
 }
 
 export interface FilterProps {
