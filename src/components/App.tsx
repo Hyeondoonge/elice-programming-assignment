@@ -4,15 +4,20 @@ import { theme } from 'Types/theme';
 import { CourseContextProvider } from './context/CourseContext';
 import { ErrorContextProvider } from './context/ErrorContext';
 import CoursePage from './page/CoursePage';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 export default function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <ErrorContextProvider>
-        <CourseContextProvider>
-          <CoursePage />
-        </CourseContextProvider>
-      </ErrorContextProvider>
-    </ThemeProvider>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <ErrorContextProvider>
+          <CourseContextProvider>
+            <Routes>
+              <Route path="/" element={<CoursePage />} />
+            </Routes>
+          </CourseContextProvider>
+        </ErrorContextProvider>
+      </ThemeProvider>
+    </Router>
   );
 }
