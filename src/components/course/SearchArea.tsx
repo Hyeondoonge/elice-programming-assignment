@@ -29,7 +29,7 @@ const StyledInput = styled.input`
 `;
 
 export default function SearchArea() {
-  const [option, setOption] = useContext(CourseContext);
+  const [option, updateCourses, updateQuery, data] = useContext(CourseContext);
   const debounce = useDebounce();
 
   return (
@@ -37,10 +37,11 @@ export default function SearchArea() {
       <RiSearchLine style={{ margin: '0px 16px' }} />
       <StyledInput
         type="text"
+        defaultValue={option?.title ?? ''}
         placeholder="배우고 싶은 언어, 기술을 선택하세요"
         onChange={e => {
           debounce(() => {
-            setOption({ ...option, title: e.target.value, offset: 0 });
+            updateQuery({ ...option, title: e.target.value, offset: 0 });
           }, 300);
         }}
       />

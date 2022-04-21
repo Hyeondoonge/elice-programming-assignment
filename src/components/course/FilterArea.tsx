@@ -37,10 +37,12 @@ const mock_filter: string[][] = [
 ];
 
 export default function FilterArea() {
-  const [option, setOption, data] = useContext(CourseContext);
+  const [option, updateCourses, updateQuery, data] = useContext(CourseContext);
   const [filter, setFilter] = useState<FilterOptionProps[][]>(
     mock_filter.map(e => e.map(e => ({ name: e, selected: false })))
   );
+
+  console.log(option);
 
   const onClickChip = (type_index: number, filter_index: number) => {
     const newFilter = filter.map(r => r.map(f => f));
@@ -48,12 +50,24 @@ export default function FilterArea() {
     setFilter(newFilter);
 
     const newOption: OptionProps = { ...option, offset: 0 };
-    const typeAttr = mock_type_attribute[type_index];
+
+    console.log(newOption);
+
+    const typeAttr = mock_type_attribute[type_index] as keyof OptionProps;
     newOption[typeAttr] = newFilter[type_index]
       .filter(({ selected }) => selected)
       .map(({ name }) => name);
-    setOption(newOption);
+    updateQuery(newOption);
   };
+
+  useEffect(() => {
+    const newFilter = filter.map(r => r.map(f => f));
+    newFilter[1] = newFilter[1].map(({ name }) => ({
+      name,
+      selected: option?.price.includes(name) ?? false
+    }));
+    setFilter(newFilter);
+  }, [option]);
 
   return (
     <StyledFilterArea>

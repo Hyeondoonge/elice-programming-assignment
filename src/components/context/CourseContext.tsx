@@ -1,30 +1,26 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { fetchCourse } from '../../api/courseAPI';
-import { CourseProps, OptionProps } from 'Types/data';
+import { OptionProps } from 'Types/data';
 import { DataProps } from 'Types/data';
 import ErrorContext from './ErrorContext';
+import { useNavigate } from 'react-router-dom';
+import QueryString from 'query-string';
 
 const CourseContext = createContext<
-  [OptionProps, (option: OptionProps) => void, DataProps, boolean] | []
+  | [OptionProps, (option: OptionProps) => void, (option: OptionProps) => void, DataProps, boolean]
+  | []
 >([]);
 
 export function CourseContextProvider({ children }: { children: React.ReactNode }) {
+  const [option, setOption] = useState<OptionProps | null>(null);
   const [setError] = useContext(ErrorContext);
-  const [option, setOption] = useState<OptionProps>({
-    title: '',
-    offset: 0,
-    count: 20,
-    price: [],
-    grade: [],
-    type: []
-  });
   const [data, setData] = useState<DataProps>({ totalCount: 0, courses: [] });
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const count = 20;
 
   const updateCourses = async (options: OptionProps) => {
     try {
-      setLoading(true);
       const { title, price, offset } = options;
 
       const param = {
@@ -45,6 +41,8 @@ export function CourseContextProvider({ children }: { children: React.ReactNode 
       };
 
       const res = await fetchCourse(param);
+
+      setOption(options);
       setData({
         totalCount: res.course_count,
         courses: res.courses
@@ -55,12 +53,14 @@ export function CourseContextProvider({ children }: { children: React.ReactNode 
     }
   };
 
-  useEffect(() => {
+  const updateQuery = (option: OptionProps) => {
+    const queryString = encodeURI(QueryString.stringify(option));
+    navigate(`/?${queryString}`);
     updateCourses(option);
-  }, [option]);
+  };
 
   return (
-    <CourseContext.Provider value={[option, setOption, data, loading]}>
+    <CourseContext.Provider value={[option, updateCourses, updateQuery, data, loading]}>
       {children}
     </CourseContext.Provider>
   );

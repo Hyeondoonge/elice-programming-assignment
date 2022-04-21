@@ -79,7 +79,7 @@ const StyledCourseArea = styled.div`
 `;
 
 export default function CourseArea() {
-  const [option, setOption, data] = useContext(CourseContext);
+  const [option, updateCourses, updateQuery, data] = useContext(CourseContext);
 
   return (
     <StyledCourseArea>

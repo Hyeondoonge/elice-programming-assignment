@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import List from '../common/List';
 import { RiArrowLeftSFill, RiArrowRightSFill } from 'react-icons/ri';
 import CourseContext from '../context/CourseContext';
+import { OptionProps } from 'Types/data';
 
 const StyledPageNumber = styled.div<{ selected: boolean }>`
   cursor: pointer;
@@ -22,7 +23,7 @@ const StyledNav = styled.button`
 `;
 
 export default function PageNumberArea() {
-  const [option, setOption, data] = useContext(CourseContext);
+  const [option, updateCourses, updateQuery, data] = useContext(CourseContext);
   const { offset } = option;
   const { totalCount } = data;
   const page = offset / 20 + 1;
@@ -49,7 +50,7 @@ export default function PageNumberArea() {
         <StyledNav
           disabled={page === 1}
           onClick={() => {
-            setOption({ ...option, offset: (page - 2) * 20 });
+            updateQuery({ ...option, offset: (page - 2) * 20 });
           }}
         >
           <RiArrowLeftSFill />
@@ -61,7 +62,7 @@ export default function PageNumberArea() {
               key={index}
               selected={page === pageIndex}
               onClick={() => {
-                setOption({ ...option, offset: (pageIndex - 1) * 20 });
+                updateQuery({ ...option, offset: (pageIndex - 1) * 20 });
               }}
             >
               {pageIndex}
@@ -71,7 +72,7 @@ export default function PageNumberArea() {
         <StyledNav
           disabled={page === totalPage}
           onClick={() => {
-            setOption({ ...option, offset: page * 20 });
+            updateQuery({ ...option, offset: page * 20 });
           }}
         >
           <RiArrowRightSFill />
