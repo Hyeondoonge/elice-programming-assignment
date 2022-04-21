@@ -18,10 +18,6 @@ export interface CourseProps {
   is_free: boolean;
 }
 
-export interface CoursesProps {
-  courses: CourseProps[];
-}
-
 export interface CourseListResponse {
   courses: CourseProps[];
   course_count: number;
