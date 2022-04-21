@@ -1,7 +1,5 @@
 import { CourseListResponse } from 'Types/data';
 
-// filter_conditions, offset, count 타입 정의
-
 const fetchCourse: (params: any) => Promise<CourseListResponse> = async (params: any) => {
   const { filter_conditions, offset, count } = params;
 
@@ -21,11 +19,13 @@ const fetchCourse: (params: any) => Promise<CourseListResponse> = async (params:
         JSON.stringify(filter_conditions)
       )}&offset=${offset}&count=${count}`
     );
-    if (res.status !== 200) throw new Error(`${res.status} ${res.statusText}`);
-    return res.json();
+
+    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+
+    // 200 - 299 응답 코드, 성공적으로 원하는 응답데이터를 받았을 때
+    return res.json(); // Promise<any>
   } catch (error) {
     throw new Error(error);
   }
 };
-
 export { fetchCourse };
