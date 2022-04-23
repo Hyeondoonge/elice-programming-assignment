@@ -9,7 +9,7 @@ import CourseContext from '../context/CourseContext';
 import Loader from '../common/Loader';
 import queryString from 'query-string';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { OptionProps } from 'Types/data';
+import { OptionProps } from '@myTypes/data';
 
 const StyledCoursePage = styled.div`
   display: flex;
@@ -20,7 +20,8 @@ const StyledCoursePage = styled.div`
 export const CoursePageContext = createContext([]);
 
 export default function CoursePage() {
-  const [option, updateCourses, updateQuery, data, loading] = useContext(CourseContext);
+  const [option, updateCourses, updateQuery, data, isLoading, isFetching] =
+    useContext(CourseContext);
   const location = useLocation();
 
   useEffect(() => {
@@ -38,7 +39,6 @@ export default function CoursePage() {
       return;
     }
     const queryObj = queryString.parse(decodeURI(location.search));
-    console.log(queryObj);
 
     for (const key in queryObj) {
       const value = queryObj[key];
@@ -73,11 +73,28 @@ export default function CoursePage() {
   return (
     <StyledCoursePage>
       <Container>
+        {isLoading && <div>New FECHING ... 👶🏻</div>}
+        {isFetching && <div>REFECHING ... 🫶</div>}
+        <input
+          type="text"
+          placeholder="
+        ✨ 옵션 체인지 ✨"
+          onChange={event => {
+            updateCourses({
+              title: event.target.value,
+              offset: 0,
+              count: 20,
+              price: [],
+              grade: [],
+              type: []
+            }); // !!! 사실은 option state 변경 함수
+          }}
+        />
         <SearchArea />
         <FilterArea />
-        {loading ? (
+        {isLoading ? (
           <Loader />
-        ) : data.totalCount === 0 ? (
+        ) : data.course_count === 0 ? (
           <div>검색된 결과가 없습니다.</div>
         ) : (
           <>

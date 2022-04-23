@@ -1,7 +1,7 @@
 import React, { ComponentProps, createContext } from 'react';
 import styled from 'styled-components';
-import { ChipProps } from 'Types/component';
-import { theme } from 'Types/theme';
+import { ChipProps } from '@myTypes/component';
+import { theme } from '@myTypes/theme';
 
 // { selected: boolean } => chipprops 속성 타입 변경 시 함께 변경되어야함.
 // Pick<ChipProps, 'selected'>> => 조금 길긴 하지만, 타입을 한개만 사용할 수 있고, 사용할 속성을 명시적으로 지정해야된다는 점은 위의 방법과 동일, 타입을 ChipProps의 속성이랑 공유할 수 있다는 점

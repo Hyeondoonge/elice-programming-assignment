@@ -11,7 +11,8 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "paths": {
-      "Types/*": ["src/type/*"]
+      "@myTypes/*": ["src/type/*"],
+      "@api/*": ["src/api/*"]
     }
   }
 }

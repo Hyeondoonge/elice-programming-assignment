@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { FilterProps } from 'Types/component';
+import { FilterProps } from '@myTypes/component';
 import Chip from '../common/Chip';
 import List from '../common/List';
 import CourseContext from '../context/CourseContext';
-import { FilterOptionProps, OptionProps } from 'Types/data';
+import { FilterOptionProps, OptionProps } from '@myTypes/data';
 
 const StyledFilterArea = styled.div`
   border: 1px solid #d8d8d8;
@@ -42,16 +42,12 @@ export default function FilterArea() {
     mock_filter.map(e => e.map(e => ({ name: e, selected: false })))
   );
 
-  console.log(option);
-
   const onClickChip = (type_index: number, filter_index: number) => {
     const newFilter = filter.map(r => r.map(f => f));
     newFilter[type_index][filter_index].selected = !newFilter[type_index][filter_index].selected;
     setFilter(newFilter);
 
     const newOption: OptionProps = { ...option, offset: 0 };
-
-    console.log(newOption);
 
     const typeAttr = mock_type_attribute[type_index] as keyof OptionProps;
     newOption[typeAttr] = newFilter[type_index]

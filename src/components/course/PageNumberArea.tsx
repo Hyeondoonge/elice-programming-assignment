@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import List from '../common/List';
 import { RiArrowLeftSFill, RiArrowRightSFill } from 'react-icons/ri';
 import CourseContext from '../context/CourseContext';
-import { OptionProps } from 'Types/data';
+import { OptionProps } from '@myTypes/data';
 
 const StyledPageNumber = styled.div<{ selected: boolean }>`
   cursor: pointer;
@@ -25,9 +25,9 @@ const StyledNav = styled.button`
 export default function PageNumberArea() {
   const [option, updateCourses, updateQuery, data] = useContext(CourseContext);
   const { offset } = option;
-  const { totalCount } = data;
+  const { course_count } = data;
   const page = offset / 20 + 1;
-  const totalPage = Math.ceil(totalCount / 20);
+  const totalPage = Math.ceil(course_count / 20);
 
   const getStartPage = (page: number) => {
     if (page - 4 > 0) {

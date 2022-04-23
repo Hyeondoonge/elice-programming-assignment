@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ComponentProps } from 'Types/component';
+import { ComponentProps } from '@myTypes/component';
 
 const StyledContainer = styled.div`
   @media screen and (min-width: 1280px) {
